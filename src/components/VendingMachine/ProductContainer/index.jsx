@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import productsList from 'mock/Products';
+import PRODUCTS_LIST from 'mock/Products';
 import Product from './Product';
 
 export default function ProductContainer() {
-  const productComponents = productsList.map(product => (
+  const productComponents = PRODUCTS_LIST.map(product => (
     <Product key={product.id} info={product}></Product>
   ));
 
