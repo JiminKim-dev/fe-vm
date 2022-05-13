@@ -48,7 +48,7 @@ const moneyReducer = (state, action) => {
   switch (action.type) {
     case 'BUTTON_INSERT_MONEY':
       const updateWalletMoney = state.walletMoneyData.map(money => {
-        return money.count === action.payload
+        return money.unit === action.payload
           ? (money = { ...money, amount: --money.amount })
           : money;
       });

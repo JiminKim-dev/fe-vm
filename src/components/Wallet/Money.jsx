@@ -9,12 +9,12 @@ const Money = ({ info }) => {
 
   const decrease = () => {
     if (info.amount === 0) return;
-    buttonInsertMoney(info.count);
+    buttonInsertMoney(info.unit);
   };
 
   return (
     <MoneyWrapper>
-      <span>{setLocalString(info.count)}원</span>
+      <span>{setLocalString(info.unit)}원</span>
       <PushBtn onClick={decrease} amount={info.amount}>
         {info.amount}개
       </PushBtn>
