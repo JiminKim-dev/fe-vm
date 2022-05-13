@@ -1,10 +1,14 @@
+import { useContext } from 'react';
+import { MoneyContext } from 'context/MoneyContext';
 import styled from 'styled-components';
 import PRODUCTS_LIST from 'mock/Products';
 import Product from './Product';
 
 export default function ProductContainer() {
+  const { insertMoneyData } = useContext(MoneyContext);
+
   const productComponents = PRODUCTS_LIST.map(product => (
-    <Product key={product.id} info={product}></Product>
+    <Product key={product.id} info={product} totalMoney={insertMoneyData}></Product>
   ));
 
   return (
