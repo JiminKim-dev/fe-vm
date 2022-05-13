@@ -5,11 +5,11 @@ import styled, { css } from 'styled-components';
 import setLocalString from 'utils/setLocalString';
 
 const Money = ({ info }) => {
-  const { insertMoney } = useContext(MoneyContext);
+  const { buttonInsertMoney } = useContext(MoneyContext);
 
   const decrease = () => {
     if (info.amount === 0) return;
-    insertMoney(info.count);
+    buttonInsertMoney(info.count);
   };
 
   return (

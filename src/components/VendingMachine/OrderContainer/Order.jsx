@@ -3,11 +3,10 @@ import { MoneyContext } from 'context/MoneyContext';
 
 import styled from 'styled-components';
 import setLocalString from 'utils/setLocalString';
-import calculateTotalMoney from 'utils/calculateTotalMoney';
 
 export default function UserOrder() {
   const { insertMoneyData } = useContext(MoneyContext);
-  const totalInsertMoney = calculateTotalMoney(insertMoneyData);
+  const totalInsertMoney = insertMoneyData;
 
   return (
     <OrderInfo>

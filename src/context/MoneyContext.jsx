@@ -1,10 +1,9 @@
 import { createContext, useReducer } from 'react';
 import WALLET_MONEY_DATA from 'mock/Wallet';
-import MACHINE_MONEY_DATA from 'mock/Machine';
 
 const initState = {
   walletMoneyData: WALLET_MONEY_DATA,
-  insertMoneyData: MACHINE_MONEY_DATA,
+  insertMoneyData: 0,
 };
 
 export const MoneyContext = createContext(initState);
@@ -12,9 +11,9 @@ export const MoneyContext = createContext(initState);
 export const MoneyProvider = ({ children }) => {
   const [state, dispatch] = useReducer(moneyReducer, initState);
 
-  const insertMoney = money => {
+  const buttonInsertMoney = money => {
     dispatch({
-      type: 'INSERT_MONEY',
+      type: 'BUTTON_INSERT_MONEY',
       payload: money,
     });
   };
@@ -24,7 +23,7 @@ export const MoneyProvider = ({ children }) => {
       value={{
         walletMoneyData: state.walletMoneyData,
         insertMoneyData: state.insertMoneyData,
-        insertMoney,
+        buttonInsertMoney,
       }}
     >
       {children}
@@ -34,18 +33,14 @@ export const MoneyProvider = ({ children }) => {
 
 const moneyReducer = (state, action) => {
   switch (action.type) {
-    case 'INSERT_MONEY':
+    case 'BUTTON_INSERT_MONEY':
       const updateWalletMoney = state.walletMoneyData.map(money => {
         return money.count === action.payload
           ? (money = { ...money, amount: --money.amount })
           : money;
       });
 
-      const updateMachineMoney = state.insertMoneyData.map(money => {
-        return money.count === action.payload
-          ? (money = { ...money, amount: ++money.amount })
-          : money;
-      });
+      const updateMachineMoney = state.insertMoneyData + action.payload;
 
       return { walletMoneyData: updateWalletMoney, insertMoneyData: updateMachineMoney };
     case 'RETURN_MONEY':
