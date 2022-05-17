@@ -51,7 +51,11 @@ export default function UserInput() {
   }, [inputValue, setInputValue]);
 
   const handleClick = () => {
-    if (totalMoney === 0) {
+    if (inputValue === '0') {
+      return;
+    }
+
+    if (!totalMoney) {
       setInputValue('');
       return;
     }
@@ -61,10 +65,22 @@ export default function UserInput() {
     setInputValue('');
   };
 
+  const handleEnterPress = e => {
+    if (e.key === 'Enter') {
+      handleClick();
+    }
+  };
+
   return (
     <InputContainer>
       <InputWrapper>
-        <InputCost type="text" placeholder="0" value={inputValue} onChange={handleChange} />
+        <InputCost
+          type="text"
+          placeholder="0"
+          value={inputValue}
+          onChange={handleChange}
+          onKeyPress={handleEnterPress}
+        />
         <span>원</span>
       </InputWrapper>
       <InputCostBtn onClick={handleClick}>투입</InputCostBtn>
