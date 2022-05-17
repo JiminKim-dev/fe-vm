@@ -12,7 +12,6 @@ export const MoneyContext = createContext(initState);
 
 export const MoneyProvider = ({ children }) => {
   const [state, dispatch] = useReducer(moneyReducer, initState);
-  const [inputValue, setInputValue] = useState('');
 
   const buttonInsertMoney = money => {
     dispatch({
@@ -33,8 +32,6 @@ export const MoneyProvider = ({ children }) => {
       value={{
         walletMoneyData: state.walletMoneyData,
         insertMoneyData: state.insertMoneyData,
-        inputValue,
-        setInputValue,
         buttonInsertMoney,
         inputInsertMoney,
       }}

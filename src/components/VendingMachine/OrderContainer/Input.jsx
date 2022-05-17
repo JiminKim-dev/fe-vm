@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { LogContext } from 'context/LogContext';
 import { MoneyContext } from 'context/MoneyContext';
 import styled from 'styled-components';
@@ -7,7 +7,8 @@ import calculateTotalMoney from 'utils/calculateTotalMoney';
 
 export default function UserInput() {
   const { insertMoneyLog } = useContext(LogContext);
-  const { walletMoneyData, inputValue, setInputValue, inputInsertMoney } = useContext(MoneyContext);
+  const { walletMoneyData, inputInsertMoney } = useContext(MoneyContext);
+  const [inputValue, setInputValue] = useState('');
   const totalMoney = calculateTotalMoney(walletMoneyData);
 
   const insertWalletMoney = num => {
