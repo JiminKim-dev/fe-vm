@@ -1,12 +1,14 @@
+import { useState, useEffect, useContext } from 'react';
 import { LogContext } from 'context/LogContext';
 import { MoneyContext } from 'context/MoneyContext';
-import { useState, useEffect, useContext } from 'react';
+import { ProductsContext } from 'context/ProductContext';
 import styled, { css } from 'styled-components';
 import setLocalString from 'utils/setLocalString';
 
 export default function Product({ info, totalMoney }) {
   const { buyProduct } = useContext(MoneyContext);
   const { buyProductLog } = useContext(LogContext);
+  const { stockConsume } = useContext(ProductsContext);
   const [isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
@@ -22,6 +24,7 @@ export default function Product({ info, totalMoney }) {
   const handleClick = () => {
     buyProduct(info.price);
     buyProductLog(info.name);
+    stockConsume(info.name);
   };
 
   return (
