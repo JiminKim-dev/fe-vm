@@ -4,7 +4,9 @@ export default function OrderLog({ log }) {
   const message = info => {
     switch (info.type) {
       case 'INSERT':
-        return `이 투입되었습니다.`;
+        return `원이 투입되었습니다.`;
+      case 'BUY':
+        return `을(를) 구매하였습니다.`;
       default:
         return;
     }
@@ -12,7 +14,7 @@ export default function OrderLog({ log }) {
 
   return (
     <Order>
-      <strong>{log.value}원</strong>
+      <strong>{log.value}</strong>
       {message(log)}
     </Order>
   );

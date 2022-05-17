@@ -84,7 +84,9 @@ export default function UserInput() {
         />
         <span>원</span>
       </InputWrapper>
-      <InputCostBtn onClick={handleClick}>투입</InputCostBtn>
+      <InputCostBtn onClick={handleClick} disabled={inputValue === '0' || inputValue === ''}>
+        투입
+      </InputCostBtn>
     </InputContainer>
   );
 }

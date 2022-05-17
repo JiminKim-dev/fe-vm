@@ -13,12 +13,19 @@ export const LogProvider = ({ children }) => {
       payload: money,
     });
   };
+  const buyProductLog = product => {
+    dispatch({
+      type: 'BUY',
+      payload: product,
+    });
+  };
 
   return (
     <LogContext.Provider
       value={{
         machineLog: state,
         insertMoneyLog,
+        buyProductLog,
       }}
     >
       {children}
@@ -29,6 +36,13 @@ export const LogProvider = ({ children }) => {
 const logReducer = (state, action) => {
   switch (action.type) {
     case 'INSERT':
+      state.push({
+        id: state.length + 1,
+        type: action.type,
+        value: action.payload,
+      });
+      return state;
+    case 'BUY':
       state.push({
         id: state.length + 1,
         type: action.type,

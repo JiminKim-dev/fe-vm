@@ -1,8 +1,12 @@
-import { useState, useEffect } from 'react';
+import { LogContext } from 'context/LogContext';
+import { MoneyContext } from 'context/MoneyContext';
+import { useState, useEffect, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import setLocalString from 'utils/setLocalString';
 
 export default function Product({ info, totalMoney }) {
+  const { buyProduct } = useContext(MoneyContext);
+  const { buyProductLog } = useContext(LogContext);
   const [isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
@@ -10,10 +14,15 @@ export default function Product({ info, totalMoney }) {
       setIsAvailable(true);
     }
 
-    if (totalMoney === 0) {
+    if (totalMoney === 0 || totalMoney < info.price) {
       setIsAvailable(false);
     }
   }, [totalMoney, info.price]);
+
+  const handleClick = () => {
+    buyProduct(info.price);
+    buyProductLog(info.name);
+  };
 
   return (
     <ProductWrapper>
@@ -22,7 +31,7 @@ export default function Product({ info, totalMoney }) {
       </ProductName>
       <PriceWrapper stock={info.stock} isAvailable={isAvailable}>
         <span className="price_state"></span>
-        <button className="push_btn" disabled={!isAvailable || !info.stock}>
+        <button className="push_btn" disabled={!isAvailable || !info.stock} onClick={handleClick}>
           {info.stock ? setLocalString(info.price) + '원' : '품절'}
         </button>
       </PriceWrapper>
