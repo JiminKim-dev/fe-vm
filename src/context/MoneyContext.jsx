@@ -1,11 +1,10 @@
-import { createContext, useReducer, useState } from 'react';
+import { createContext, useReducer } from 'react';
 import WALLET_MONEY_DATA from 'mock/Wallet';
 import calculateTotalMoney from 'utils/calculateTotalMoney';
 
 const initState = {
   walletMoneyData: WALLET_MONEY_DATA,
   insertMoneyData: 0,
-  inputValue: '',
 };
 
 export const MoneyContext = createContext(initState);
