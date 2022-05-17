@@ -7,6 +7,8 @@ export default function OrderLog({ log }) {
         return `원이 투입되었습니다.`;
       case 'BUY':
         return `을(를) 구매하였습니다.`;
+      case 'DROP':
+        return `이(가) 배출되었습니다.`;
       default:
         return;
     }

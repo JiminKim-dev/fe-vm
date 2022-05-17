@@ -30,7 +30,6 @@ export const ProductsProvider = ({ children }) => {
 const ProductsReducer = (state, action) => {
   switch (action.type) {
     case 'STOCK_CONSUME':
-      console.log(state.find(el => el.name === action.payload));
       const updateStock = state.map(producut => {
         return producut.name === action.payload
           ? (producut = { ...producut, stock: --producut.stock })

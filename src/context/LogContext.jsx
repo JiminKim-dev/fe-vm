@@ -13,9 +13,17 @@ export const LogProvider = ({ children }) => {
       payload: money,
     });
   };
+
   const buyProductLog = product => {
     dispatch({
       type: 'BUY',
+      payload: product,
+    });
+  };
+
+  const dropProductLog = product => {
+    dispatch({
+      type: 'DROP',
       payload: product,
     });
   };
@@ -26,6 +34,7 @@ export const LogProvider = ({ children }) => {
         machineLog: state,
         insertMoneyLog,
         buyProductLog,
+        dropProductLog,
       }}
     >
       {children}
@@ -36,19 +45,14 @@ export const LogProvider = ({ children }) => {
 const logReducer = (state, action) => {
   switch (action.type) {
     case 'INSERT':
-      state.push({
-        id: state.length + 1,
-        type: action.type,
-        value: action.payload,
-      });
-      return state;
     case 'BUY':
+    case 'DROP':
       state.push({
         id: state.length + 1,
         type: action.type,
         value: action.payload,
       });
-      return state;
+      return [...state];
     case 'RETURN':
       return;
     default:
