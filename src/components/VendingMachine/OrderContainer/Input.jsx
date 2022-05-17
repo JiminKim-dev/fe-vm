@@ -1,10 +1,12 @@
 import { useEffect, useContext } from 'react';
+import { LogContext } from 'context/LogContext';
 import { MoneyContext } from 'context/MoneyContext';
 import styled from 'styled-components';
 import setLocalString from 'utils/setLocalString';
 import calculateTotalMoney from 'utils/calculateTotalMoney';
 
 export default function UserInput() {
+  const { insertMoneyLog } = useContext(LogContext);
   const { walletMoneyData, inputValue, setInputValue, inputInsertMoney } = useContext(MoneyContext);
   const totalMoney = calculateTotalMoney(walletMoneyData);
 
@@ -35,6 +37,7 @@ export default function UserInput() {
         : (money -= item.unit * 투입가능횟수);
     });
 
+    insertMoneyLog(calculateTotalMoney(insertLog));
     return insertLog;
   };
 
