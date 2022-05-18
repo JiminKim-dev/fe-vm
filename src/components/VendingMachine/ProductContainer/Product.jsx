@@ -25,8 +25,8 @@ export default function Product({ info, totalMoney }) {
   const handleClick = () => {
     buyProduct(info.price);
     buyProductLog(info.name);
+    stockConsume(info.name);
     setTimeout(() => {
-      stockConsume(info.name);
       dropProductLog(info.name);
     }, 2000);
   };

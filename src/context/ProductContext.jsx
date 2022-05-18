@@ -35,7 +35,7 @@ const ProductsReducer = (state, action) => {
           ? (producut = { ...producut, stock: --producut.stock })
           : producut;
       });
-      return (state = updateStock);
+      return updateStock;
     case 'STOCK_UP':
       return;
     default:
