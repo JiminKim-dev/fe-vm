@@ -17,7 +17,7 @@ export default function UserInput() {
     // 자동보정
     let money = Math.floor(num / 10) * 10;
     if (totalMoney < money) {
-      insertMoneyLog(calculateTotalMoney(walletMoneyData));
+      insertMoneyLog(walletMoneyData);
       return walletMoneyData;
     }
 
@@ -41,7 +41,7 @@ export default function UserInput() {
         : (money -= item.unit * 투입가능횟수);
     });
 
-    insertMoneyLog(calculateTotalMoney(insertLog));
+    insertMoneyLog(insertLog);
     return insertLog;
   };
 

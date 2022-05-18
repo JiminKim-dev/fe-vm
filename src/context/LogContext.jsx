@@ -45,6 +45,18 @@ export const LogProvider = ({ children }) => {
 const logReducer = (state, action) => {
   switch (action.type) {
     case 'INSERT':
+      action.payload.forEach(money => {
+        state.push({
+          id: state.length + 1,
+          type: action.type,
+          value: {
+            unit: money.unit,
+            amount: money.amount,
+          },
+        });
+      });
+
+      return state;
     case 'BUY':
     case 'DROP':
       state.push({
