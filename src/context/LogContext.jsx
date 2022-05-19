@@ -55,6 +55,7 @@ const logReducer = (state, action) => {
 
   switch (action.type) {
     case 'INSERT':
+    case 'RETURN':
       action.payload.forEach(money => {
         const newLog = {
           id: newState.length + 1,
@@ -78,21 +79,6 @@ const logReducer = (state, action) => {
       };
 
       newState.push(newLog);
-
-      return newState;
-    case 'RETURN':
-      action.payload.forEach(money => {
-        const newLog = {
-          id: newState.length + 1,
-          type: action.type,
-          value: {
-            unit: money.unit,
-            amount: money.amount,
-          },
-        };
-
-        newState.push(newLog);
-      });
 
       return newState;
     default:
