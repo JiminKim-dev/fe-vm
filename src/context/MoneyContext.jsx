@@ -33,6 +33,13 @@ export const MoneyProvider = ({ children }) => {
     });
   };
 
+  const returnMoney = money => {
+    dispatch({
+      type: 'RETURN_MONEY',
+      payload: money,
+    });
+  };
+
   return (
     <MoneyContext.Provider
       value={{
@@ -41,6 +48,7 @@ export const MoneyProvider = ({ children }) => {
         buttonInsertMoney,
         inputInsertMoney,
         buyProduct,
+        returnMoney,
       }}
     >
       {children}
@@ -49,6 +57,8 @@ export const MoneyProvider = ({ children }) => {
 };
 
 const moneyReducer = (state, action) => {
+  const newState = { ...state };
+
   switch (action.type) {
     case 'BUTTON_INSERT_MONEY':
       const updateWalletMoney = state.walletMoneyData.map(money => {
@@ -59,10 +69,9 @@ const moneyReducer = (state, action) => {
 
       return { walletMoneyData: updateWalletMoney, insertMoneyData: updateMachineMoney };
     case 'INPUT_INSERT_MONEY':
-      const newState = { ...state };
       const updateWalletMoney2 = newState.walletMoneyData.map(money => {
         action.payload.forEach(el => {
-          el.id === money.id && (money = { ...money, amount: money.amount - el.amount });
+          el.unit === money.unit && (money = { ...money, amount: money.amount - el.amount });
         });
 
         return money;
@@ -75,7 +84,14 @@ const moneyReducer = (state, action) => {
       const updateInsertMoney = state.insertMoneyData - action.payload;
       return { ...state, insertMoneyData: updateInsertMoney };
     case 'RETURN_MONEY':
-      return;
+      const getChange = newState.walletMoneyData.map(money => {
+        action.payload.forEach(el => {
+          el.unit === money.unit && (money = { ...money, amount: money.amount + el.amount });
+        });
+        return money;
+      });
+
+      return { walletMoneyData: getChange, insertMoneyData: 0 };
     default:
       throw new Error();
   }

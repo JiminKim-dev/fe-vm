@@ -1,7 +1,21 @@
+import { useContext } from 'react';
+import { LogContext } from 'context/LogContext';
+import { MoneyContext } from 'context/MoneyContext';
+
 import styled from 'styled-components';
+import exchangeMoney from 'utils/exchangeMoney';
 
 export default function ReturnCost() {
-  return <ReturnBtn>반환</ReturnBtn>;
+  const { returnMoneyLog } = useContext(LogContext);
+  const { insertMoneyData, returnMoney } = useContext(MoneyContext);
+
+  const handleClick = () => {
+    const exchangeLog = exchangeMoney(insertMoneyData);
+    returnMoney(exchangeLog);
+    returnMoneyLog(exchangeLog);
+  };
+
+  return <ReturnBtn onClick={handleClick}>반환</ReturnBtn>;
 }
 
 const ReturnBtn = styled.button`

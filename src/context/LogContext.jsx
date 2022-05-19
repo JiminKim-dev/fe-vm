@@ -28,6 +28,13 @@ export const LogProvider = ({ children }) => {
     });
   };
 
+  const returnMoneyLog = money => {
+    dispatch({
+      type: 'RETURN',
+      payload: money,
+    });
+  };
+
   return (
     <LogContext.Provider
       value={{
@@ -35,6 +42,7 @@ export const LogProvider = ({ children }) => {
         insertMoneyLog,
         buyProductLog,
         dropProductLog,
+        returnMoneyLog,
       }}
     >
       {children}
@@ -73,7 +81,20 @@ const logReducer = (state, action) => {
 
       return newState;
     case 'RETURN':
-      return;
+      action.payload.forEach(money => {
+        const newLog = {
+          id: newState.length + 1,
+          type: action.type,
+          value: {
+            unit: money.unit,
+            amount: money.amount,
+          },
+        };
+
+        newState.push(newLog);
+      });
+
+      return newState;
     default:
       throw new Error();
   }
