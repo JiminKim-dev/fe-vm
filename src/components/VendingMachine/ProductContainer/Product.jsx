@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { LogContext } from 'context/LogContext';
+import { useLogState } from 'context/LogContext';
 import { useMoneyState } from 'context/MoneyContext';
 import { ProductsContext } from 'context/ProductContext';
 
@@ -8,7 +8,7 @@ import setLocalString from 'utils/setLocalString';
 
 export default function Product({ info, totalMoney }) {
   const { buyProduct } = useMoneyState();
-  const { dropProductLog } = useContext(LogContext);
+  const { dropProductLog } = useLogState();
   const { stockConsume } = useContext(ProductsContext);
   const [isAvailable, setIsAvailable] = useState(false);
 

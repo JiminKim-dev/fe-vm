@@ -1,5 +1,5 @@
 import { createContext, useReducer, useCallback, useContext } from 'react';
-import { LogContext } from './LogContext';
+import { useLogState } from './LogContext';
 
 import WALLET_MONEY_DATA from 'mock/Wallet';
 import calculateTotalMoney from 'utils/calculateTotalMoney';
@@ -61,7 +61,7 @@ const moneyReducer = (state, action) => {
 
 export function useMoneyState() {
   const { state, dispatch } = useContext(MoneyContext);
-  const { insertMoneyLog, buyProductLog, returnMoneyLog } = useContext(LogContext);
+  const { insertMoneyLog, buyProductLog, returnMoneyLog } = useLogState();
 
   if (!state) throw new Error();
 

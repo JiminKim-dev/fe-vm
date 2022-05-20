@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useMoneyState } from 'context/MoneyContext';
-import { LogContext } from 'context/LogContext';
+import { useLogState } from 'context/LogContext';
 import { TimerContext } from 'context/TimerContext';
 
 import styled from 'styled-components';
@@ -8,8 +8,8 @@ import setLocalString from 'utils/setLocalString';
 import OrderLog from './OrderLog';
 
 export default function UserOrder() {
-  const { machineLog } = useContext(LogContext);
   const { insertMoneyData } = useMoneyState();
+  const { machineLog } = useLogState();
   const totalInsertMoney = insertMoneyData;
 
   const orderLog = machineLog.map(log => {
