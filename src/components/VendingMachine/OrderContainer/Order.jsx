@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { LogContext } from 'context/LogContext';
 import { MoneyContext } from 'context/MoneyContext';
+import { TimerContext } from 'context/TimerContext';
 
 import styled from 'styled-components';
 import setLocalString from 'utils/setLocalString';
@@ -15,12 +16,20 @@ export default function UserOrder() {
     return <OrderLog key={log.id} log={log} />;
   });
 
+  const { countdown } = useContext(TimerContext);
+
   return (
     <OrderInfo>
       <OrderList>{orderLog}</OrderList>
       <InputCostInfo>
-        <span>투입금액: </span>
-        <span>{setLocalString(totalInsertMoney)} 원</span>
+        <InfoWrapper>
+          <span>투입 금액: </span>
+          <span>{setLocalString(totalInsertMoney)} 원</span>
+        </InfoWrapper>
+        <InfoWrapper>
+          <span>남은 시간: </span>
+          <span>{countdown} 초</span>
+        </InfoWrapper>
       </InputCostInfo>
     </OrderInfo>
   );
@@ -41,16 +50,19 @@ const OrderInfo = styled.div`
 `;
 
 const InputCostInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-top: 6px;
   border-top: 2px solid black;
   ${({ theme }) => theme.fontStyles.mediumBold};
 `;
 
+const InfoWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 6px;
+`;
+
 const OrderList = styled.ul`
   overflow-y: auto;
-  margin: 12px 0;
+  margin-bottom: 6px;
 
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
