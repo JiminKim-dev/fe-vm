@@ -12,14 +12,14 @@ function App() {
   return (
     <TimerProvider>
       <MoneyProvider>
-        <LogProvider>
-          <ProductsProvider>
+        <ProductsProvider>
+          <LogProvider>
             <ThemeProvider theme={theme}>
               <GlobalStyle />
               <Router />
             </ThemeProvider>
-          </ProductsProvider>
-        </LogProvider>
+          </LogProvider>
+        </ProductsProvider>
       </MoneyProvider>
     </TimerProvider>
   );
