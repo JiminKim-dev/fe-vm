@@ -1,4 +1,6 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useReducer, useCallback, useContext } from 'react';
+import { LogContext } from './LogContext';
+
 import WALLET_MONEY_DATA from 'mock/Wallet';
 import calculateTotalMoney from 'utils/calculateTotalMoney';
 
@@ -12,48 +14,7 @@ export const MoneyContext = createContext(initState);
 export const MoneyProvider = ({ children }) => {
   const [state, dispatch] = useReducer(moneyReducer, initState);
 
-  const buttonInsertMoney = money => {
-    dispatch({
-      type: 'BUTTON_INSERT_MONEY',
-      payload: money,
-    });
-  };
-
-  const inputInsertMoney = money => {
-    dispatch({
-      type: 'INPUT_INSERT_MONEY',
-      payload: money,
-    });
-  };
-
-  const buyProduct = product => {
-    dispatch({
-      type: 'BUY_PRODUCT',
-      payload: product,
-    });
-  };
-
-  const returnMoney = money => {
-    dispatch({
-      type: 'RETURN_MONEY',
-      payload: money,
-    });
-  };
-
-  return (
-    <MoneyContext.Provider
-      value={{
-        walletMoneyData: state.walletMoneyData,
-        insertMoneyData: state.insertMoneyData,
-        buttonInsertMoney,
-        inputInsertMoney,
-        buyProduct,
-        returnMoney,
-      }}
-    >
-      {children}
-    </MoneyContext.Provider>
-  );
+  return <MoneyContext.Provider value={{ state, dispatch }}>{children}</MoneyContext.Provider>;
 };
 
 const moneyReducer = (state, action) => {
@@ -82,6 +43,7 @@ const moneyReducer = (state, action) => {
       return { walletMoneyData: updateWalletMoney2, insertMoneyData: updateMachineMoney2 };
     case 'BUY_PRODUCT':
       const updateInsertMoney = state.insertMoneyData - action.payload;
+
       return { ...state, insertMoneyData: updateInsertMoney };
     case 'RETURN_MONEY':
       const getChange = newState.walletMoneyData.map(money => {
@@ -96,3 +58,52 @@ const moneyReducer = (state, action) => {
       throw new Error();
   }
 };
+
+export function useMoneyState() {
+  const { state, dispatch } = useContext(MoneyContext);
+  const { insertMoneyLog, buyProductLog, returnMoneyLog } = useContext(LogContext);
+
+  if (!state) throw new Error();
+
+  const buttonInsertMoney = useCallback(money => {
+    dispatch({
+      type: 'BUTTON_INSERT_MONEY',
+      payload: money.unit,
+    });
+    insertMoneyLog([{ ...money, amount: 1 }]);
+  }, []);
+
+  const inputInsertMoney = useCallback(money => {
+    dispatch({
+      type: 'INPUT_INSERT_MONEY',
+      payload: money,
+    });
+    insertMoneyLog(money);
+  }, []);
+
+  const buyProduct = useCallback(product => {
+    dispatch({
+      type: 'BUY_PRODUCT',
+      payload: product.price,
+    });
+
+    buyProductLog(product.name);
+  }, []);
+
+  const returnMoney = useCallback(money => {
+    dispatch({
+      type: 'RETURN_MONEY',
+      payload: money,
+    });
+    returnMoneyLog(money);
+  }, []);
+
+  return {
+    walletMoneyData: state.walletMoneyData,
+    insertMoneyData: state.insertMoneyData,
+    buttonInsertMoney,
+    inputInsertMoney,
+    buyProduct,
+    returnMoney,
+  };
+}

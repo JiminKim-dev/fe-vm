@@ -1,6 +1,6 @@
 import { useContext } from 'react';
+import { useMoneyState } from 'context/MoneyContext';
 import { LogContext } from 'context/LogContext';
-import { MoneyContext } from 'context/MoneyContext';
 import { TimerContext } from 'context/TimerContext';
 
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import OrderLog from './OrderLog';
 
 export default function UserOrder() {
   const { machineLog } = useContext(LogContext);
-  const { insertMoneyData } = useContext(MoneyContext);
+  const { insertMoneyData } = useMoneyState();
   const totalInsertMoney = insertMoneyData;
 
   const orderLog = machineLog.map(log => {

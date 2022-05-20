@@ -1,14 +1,13 @@
-import { useEffect, useContext, useState } from 'react';
-import { LogContext } from 'context/LogContext';
-import { MoneyContext } from 'context/MoneyContext';
+import { useEffect, useState } from 'react';
+import { useMoneyState } from 'context/MoneyContext';
+
 import styled from 'styled-components';
 import setLocalString from 'utils/setLocalString';
 import calculateTotalMoney from 'utils/calculateTotalMoney';
 import insertWalletMoney from 'utils/insertMoney';
 
 export default function UserInput() {
-  const { insertMoneyLog } = useContext(LogContext);
-  const { walletMoneyData, inputInsertMoney } = useContext(MoneyContext);
+  const { walletMoneyData, inputInsertMoney } = useMoneyState();
   const [inputValue, setInputValue] = useState('');
   const totalMoney = calculateTotalMoney(walletMoneyData);
 
@@ -34,7 +33,6 @@ export default function UserInput() {
     const removeLocalString = Number(inputValue.replace(',', ''));
     const insertLog = insertWalletMoney(walletMoneyData, removeLocalString, totalMoney);
     inputInsertMoney(insertLog);
-    insertMoneyLog(insertLog);
     setInputValue('');
   };
 

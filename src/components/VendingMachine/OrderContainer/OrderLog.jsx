@@ -1,9 +1,9 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, memo } from 'react';
 import styled from 'styled-components';
 import setLocalString from 'utils/setLocalString';
 import logMessage from 'utils/logmessage';
 
-export default function OrderLog({ log }) {
+const OrderLog = ({ log }) => {
   const scrollRef = useRef();
 
   useEffect(() => {
@@ -27,7 +27,9 @@ export default function OrderLog({ log }) {
       <div ref={scrollRef}></div>
     </Order>
   );
-}
+};
+
+export default memo(OrderLog);
 
 const Order = styled.li`
   margin-bottom: 4px;

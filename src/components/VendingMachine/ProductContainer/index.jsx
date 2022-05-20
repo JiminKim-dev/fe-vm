@@ -1,12 +1,12 @@
 import { useContext } from 'react';
-import { MoneyContext } from 'context/MoneyContext';
+import { useMoneyState } from 'context/MoneyContext';
 import { ProductsContext } from 'context/ProductContext';
 
 import styled from 'styled-components';
 import Product from './Product';
 
 function ListWrapper() {
-  const { insertMoneyData } = useContext(MoneyContext);
+  const { insertMoneyData } = useMoneyState();
   const { productsList } = useContext(ProductsContext);
 
   const productComponents = productsList.map(product => (

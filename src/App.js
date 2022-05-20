@@ -11,16 +11,16 @@ import Router from 'Router';
 function App() {
   return (
     <TimerProvider>
-      <LogProvider>
-        <MoneyProvider>
+      <MoneyProvider>
+        <LogProvider>
           <ProductsProvider>
             <ThemeProvider theme={theme}>
               <GlobalStyle />
               <Router />
             </ThemeProvider>
           </ProductsProvider>
-        </MoneyProvider>
-      </LogProvider>
+        </LogProvider>
+      </MoneyProvider>
     </TimerProvider>
   );
 }
