@@ -15,6 +15,7 @@ export default function OrderContainer() {
 }
 
 const Container = styled.div`
+  width: 280px;
   padding: 20px;
   border: 1px solid black;
   border-left: none;

@@ -39,7 +39,7 @@ const OrderInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
+  width: 240px;
   height: 400px;
   margin-bottom: 12px;
   padding: 20px;
